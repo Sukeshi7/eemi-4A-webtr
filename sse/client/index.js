@@ -14,9 +14,11 @@ document.getElementById("login").addEventListener("submit", function (e) {
     const data = JSON.parse(e.data);
     switch (data.type) {
       case "new-message":
-        addMessage(data.payload);
         break;
     }
+  });
+  eventSource.addEventListener("new-message", function (e) {
+    addMessage(JSON.parse(e.data));
   });
   document.getElementById("chat").style.display = "block";
   e.currentTarget.style.display = "none";

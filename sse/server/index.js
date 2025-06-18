@@ -58,9 +58,12 @@ app.get("/messages/subscribe", (req, res) => {
 
 function broadcast(event) {
   console.log(`${subscribers.length} subscribers to notify`);
-  for (let { id, res } of subscribers) {
-    console.log(`Sending event to ${id}`);
-    res.write(`data: ${JSON.stringify(event)}`);
+  for (let { id: subId, res } of subscribers) {
+    console.log(`Sending event to ${subId}`);
+    const { type, payload } = event;
+    res.write(`id: ${payload.id}\n`);
+    res.write(`event: ${type}\n`);
+    res.write(`data: ${JSON.stringify(payload)}`);
     res.write(`\n\n`);
   }
 }
