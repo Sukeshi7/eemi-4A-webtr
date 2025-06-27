@@ -56,16 +56,4 @@ app.get("/messages/subscribe", (req, res) => {
   }, 10 * 1000);
 });
 
-function broadcast(event) {
-  console.log(`${subscribers.length} subscribers to notify`);
-  for (let { id: subId, res } of subscribers) {
-    console.log(`Sending event to ${subId}`);
-    const { type, payload } = event;
-    res.write(`id: ${payload.id}\n`);
-    res.write(`event: ${type}\n`);
-    res.write(`data: ${JSON.stringify(payload)}`);
-    res.write(`\n\n`);
-  }
-}
-
 app.listen(3000, () => console.log("Server listening on port 3000"));
