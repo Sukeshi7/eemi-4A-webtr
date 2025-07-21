@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./app.js" type="module" defer></script>
+  </head>
+  <body>
+    <div>
+      <h2>Original</h2>
+      <video id="original" controls src="./test.mp4" />
+    </div>
+    <div>
+      <h2>Duplicate</h2>
+      <video id="duplicate" controls />
+    </div>
+  </body>
+
+  <div id="chat">
+    <div
+      id="messages"
+      style="display: flex; flex-direction: column; gap: 10px"
+    ></div>
+    <form id="send-sender">
+      <span>Sender message</span>
+      <input name="message" placeholder="Type your message" />
+      <input type="submit" value="Send" />
+    </form>
+    <form id="send-receiver">
+      <span>Receiver message</span>
+      <input name="message" placeholder="Type your message" />
+      <input type="submit" value="Send" />
+    </form>
+  </div>
+</html>
