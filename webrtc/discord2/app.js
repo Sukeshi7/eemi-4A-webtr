@@ -82,7 +82,6 @@ class CallCenter {
 	}
 
 	setupEventListeners() {
-		// Login form
 		document.getElementById('login-form').addEventListener('submit', (e) => {
 			e.preventDefault();
 			const username = document.getElementById('username').value.trim();
@@ -91,17 +90,14 @@ class CallCenter {
 			}
 		});
 
-		// Hang up button
 		document.getElementById('hang-up').addEventListener('click', () => {
 			this.endCall();
 		});
 
-		// Toggle video button
 		document.getElementById('toggle-video').addEventListener('click', () => {
 			this.toggleVideo();
 		});
 
-		// Toggle audio button
 		document.getElementById('toggle-audio').addEventListener('click', () => {
 			this.toggleAudio();
 		});
@@ -157,10 +153,8 @@ class CallCenter {
 			this.currentCall = { userId, username, type: 'outgoing' };
 			this.showMessage(`Appel en cours vers ${username}...`);
 
-			// Demander l'accès aux médias
 			await this.setupLocalMedia();
 
-			// Envoyer la demande d'appel
 			this.socket.send(JSON.stringify({
 				type: 'call',
 				targetUserId: userId
@@ -235,19 +229,16 @@ class CallCenter {
 	async createPeerConnection() {
 		this.peerConnection = new RTCPeerConnection(this.iceServers);
 
-		// Ajouter les tracks locaux
 		if (this.localStream) {
 			this.localStream.getTracks().forEach(track => {
 				this.peerConnection.addTrack(track, this.localStream);
 			});
 		}
 
-		// Gérer les tracks distants
 		this.peerConnection.ontrack = (event) => {
 			document.getElementById('remote-video').srcObject = event.streams[0];
 		};
 
-		// Gérer les ICE candidates
 		this.peerConnection.onicecandidate = (event) => {
 			if (event.candidate && this.currentCall) {
 				this.socket.send(JSON.stringify({
@@ -258,7 +249,6 @@ class CallCenter {
 			}
 		};
 
-		// Gérer les changements de connexion
 		this.peerConnection.onconnectionstatechange = () => {
 			console.log('État connexion:', this.peerConnection.connectionState);
 			if (this.peerConnection.connectionState === 'connected') {
@@ -322,19 +312,16 @@ class CallCenter {
 	}
 
 	cleanup() {
-		// Fermer la connexion peer
 		if (this.peerConnection) {
 			this.peerConnection.close();
 			this.peerConnection = null;
 		}
 
-		// Arrêter les streams locaux
 		if (this.localStream) {
 			this.localStream.getTracks().forEach(track => track.stop());
 			this.localStream = null;
 		}
 
-		// Réinitialiser l'interface
 		document.getElementById('call-interface').style.display = 'none';
 		document.getElementById('user-list-container').style.display = 'block';
 		document.getElementById('local-video').srcObject = null;
@@ -379,7 +366,6 @@ class CallCenter {
 		messageDiv.appendChild(messageElement);
 		messageDiv.scrollTop = messageDiv.scrollHeight;
 
-		// Supprimer le message après 5 secondes
 		setTimeout(() => {
 			if (messageElement.parentNode) {
 				messageElement.parentNode.removeChild(messageElement);
@@ -388,5 +374,4 @@ class CallCenter {
 	}
 }
 
-// Initialiser l'application
 const callCenter = new CallCenter();

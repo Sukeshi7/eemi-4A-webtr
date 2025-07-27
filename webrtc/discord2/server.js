@@ -3,7 +3,6 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 
-// Créer un serveur HTTP simple pour servir les fichiers statiques
 const server = http.createServer((req, res) => {
 	let filePath = '.' + req.url;
 	if (filePath === './') filePath = './index.html';
@@ -33,10 +32,8 @@ const server = http.createServer((req, res) => {
 	});
 });
 
-// Créer le serveur WebSocket
 const wss = new WebSocket.Server({ server });
 
-// Stocker les utilisateurs connectés
 const users = new Map();
 
 wss.on('connection', (ws) => {
@@ -88,7 +85,6 @@ wss.on('connection', (ws) => {
 function handleUserJoin(ws, data) {
 	const { username } = data;
 
-	// Vérifier si le nom d'utilisateur existe déjà
 	for (let user of users.values()) {
 		if (user.username === username) {
 			ws.send(JSON.stringify({
@@ -99,18 +95,15 @@ function handleUserJoin(ws, data) {
 		}
 	}
 
-	// Ajouter l'utilisateur
 	const userId = generateUserId();
 	users.set(ws, { id: userId, username, socket: ws });
 
-	// Confirmer la connexion
 	ws.send(JSON.stringify({
 		type: 'joined',
 		userId: userId,
 		username: username
 	}));
 
-	// Envoyer la liste des utilisateurs à tous
 	broadcastUserList();
 }
 
@@ -126,7 +119,6 @@ function handleCallRequest(ws, data) {
 		return;
 	}
 
-	// Envoyer la demande d'appel au destinataire
 	callee.socket.send(JSON.stringify({
 		type: 'incoming-call',
 		callerId: caller.id,
@@ -140,7 +132,6 @@ function handleCallAnswer(ws, data) {
 
 	if (!caller || !callee) return;
 
-	// Informer l'appelant que l'appel est accepté
 	caller.socket.send(JSON.stringify({
 		type: 'call-accepted',
 		calleeId: callee.id,
@@ -154,7 +145,6 @@ function handleCallDecline(ws, data) {
 
 	if (!caller || !callee) return;
 
-	// Informer l'appelant que l'appel est refusé
 	caller.socket.send(JSON.stringify({
 		type: 'call-declined',
 		calleeId: callee.id,
