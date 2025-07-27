@@ -1,0 +1,16 @@
+{
+  "name": "call-center-webrtc",
+  "version": "1.0.0",
+  "description": "Call center en temps réel avec WebRTC",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["webrtc", "websocket", "call-center"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.14.2"
+  }
+}

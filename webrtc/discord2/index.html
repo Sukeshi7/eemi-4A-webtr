@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Discord 2</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						discord: {
+							dark: '#202225',
+							darker: '#36393f',
+							blurple: '#5865f2',
+							green: '#57f287',
+							red: '#ed4245',
+							gray: '#4f545c',
+							lightgray: '#b9bbbe'
+						}
+					}
+				}
+			}
+		}
+	</script>
+</head>
+<body class="bg-discord-dark text-white font-sans">
+<div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
+	<div class="bg-discord-darker rounded-lg p-8 max-w-md w-full">
+		<div class="text-center mb-8">
+			<h1 class="text-3xl font-bold text-white mb-2">Discord 2</h1>
+			<p class="text-discord-lightgray">Connectez-vous pour commencer</p>
+		</div>
+		<form id="login-form" class="space-y-4">
+			<div>
+				<input
+						type="text"
+						id="username"
+						placeholder="Nom d'utilisateur"
+						required
+						class="w-full bg-discord-dark border-none rounded px-4 py-3 text-white placeholder-discord-lightgray focus:ring-2 focus:ring-discord-blurple outline-none"
+				>
+			</div>
+			<button
+					type="submit"
+					class="w-full bg-discord-blurple hover:bg-blue-600 text-white font-medium py-3 px-4 rounded transition-colors"
+			>
+				Se connecter
+			</button>
+		</form>
+	</div>
+</div>
+
+<div id="call-center" class="hidden h-screen flex">
+	<div class="w-60 bg-discord-darker flex flex-col">
+		<div class="p-4 border-b border-discord-gray">
+			<h3 class="font-semibold text-discord-lightgray text-sm uppercase tracking-wide">
+				Utilisateurs connectés
+			</h3>
+		</div>
+		<div id="user-list" class="flex-1 p-2 overflow-y-auto"></div>
+	</div>
+
+	<div class="flex-1 flex flex-col">
+		<div id="messages" class="bg-discord-darker border-b border-discord-gray p-4 h-20 overflow-y-auto"></div>
+
+		<div id="call-interface" class="hidden flex-1 p-6">
+			<div class="grid grid-cols-2 gap-6 h-80 mb-6">
+				<div class="relative bg-black rounded-lg overflow-hidden">
+					<video id="local-video" autoplay muted class="w-full h-full object-cover"></video>
+					<div class="absolute bottom-2 left-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+						Vous
+					</div>
+				</div>
+				<div class="relative bg-black rounded-lg overflow-hidden">
+					<video id="remote-video" autoplay class="w-full h-full object-cover"></video>
+					<div class="absolute bottom-2 left-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+						Correspondant
+					</div>
+				</div>
+			</div>
+
+			<div class="flex justify-center space-x-4">
+				<button
+						id="toggle-video"
+						class="bg-discord-blurple hover:bg-blue-600 text-white px-6 py-3 rounded-full transition-colors"
+				>
+					Vidéo ON
+				</button>
+				<button
+						id="toggle-audio"
+						class="bg-discord-green hover:bg-green-600 text-white px-6 py-3 rounded-full transition-colors"
+				>
+					Micro ON
+				</button>
+				<button
+						id="hang-up"
+						class="bg-discord-red hover:bg-red-600 text-white px-6 py-3 rounded-full transition-colors"
+				>
+					Raccrocher
+				</button>
+			</div>
+		</div>
+
+		<div id="user-list-container" class="flex-1 flex items-center justify-center p-6">
+			<div class="text-center">
+				<h2 class="text-2xl font-bold text-white mb-4">Bienvenue dans Discord 2</h2>
+				<p class="text-discord-lightgray">Sélectionnez un utilisateur pour l'appeler</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
